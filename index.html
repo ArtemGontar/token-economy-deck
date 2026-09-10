@@ -645,33 +645,51 @@
 
   <!-- 14: DECISION -->
   <section class="slide sec-decide" data-title="Decision triage">
-    <header><p class="eyebrow">05 · AI vs. doing it yourself</p><h2>Effectiveness = value ÷ (tokens + your review time)</h2></header>
-    <div class="content fill" style="justify-content:space-between">
-      <div class="grid-2">
-        <article class="card" style="border-color:#35e0a1"><span class="icon">🤖</span><h3>Delegate to AI</h3><p class="card-copy">Mechanical, well-specified, low blast-radius, easy to verify.</p>
-          <ul class="clean-list" style="--dot:#35e0a1; margin-top:8px">
-            <li>Boilerplate/CRUD, formatting, repetitive refactors across many files</li>
-            <li>Triage and first-pass summarization of large volumes (issues, logs, PRs)</li>
-            <li>Tasks where a wrong answer is cheap and fast to catch in review</li>
-          </ul>
-        </article>
-        <article class="card" style="border-color:#ff6fa3"><span class="icon">🧑‍💻</span><h3>Drive it yourself</h3><p class="card-copy">Novel, ambiguous, high blast-radius, security-critical.</p>
-          <ul class="clean-list" style="--dot:#ff6fa3; margin-top:8px">
-            <li>Architecture decisions with long-term lock-in you'll own for years</li>
-            <li>Anything touching auth, payments, data-loss risk, or prod credentials</li>
-            <li>Genuinely novel problems with no reference implementation to check against</li>
-          </ul>
-        </article>
+    <header><p class="eyebrow">05 · AI vs. doing it yourself</p><h2>Not a competition — a $100 / 8h budget allocation problem</h2></header>
+    <div class="content split-60">
+      <div class="fill">
+        <div class="card">
+          <h3>Who owns which decision</h3>
+          <div style="display:flex;gap:18px;font-size:12px;color:var(--muted);margin:2px 0 12px">
+            <span>🧑‍💻 Human — what &amp; why</span><span>🤖 AI — how</span>
+          </div>
+          <div class="bar-row" style="grid-template-columns:148px 1fr 64px">
+            <span class="bar-label">Problem framing</span>
+            <div class="bar-track" style="display:flex"><div style="width:85%;background:#ff6fa3;height:100%"></div><div style="width:15%;background:#35e0a1;height:100%"></div></div>
+            <span class="bar-value">85 / 15</span>
+          </div>
+          <div class="bar-row" style="grid-template-columns:148px 1fr 64px">
+            <span class="bar-label">Architecture</span>
+            <div class="bar-track" style="display:flex"><div style="width:70%;background:#ff6fa3;height:100%"></div><div style="width:30%;background:#35e0a1;height:100%"></div></div>
+            <span class="bar-value">70 / 30</span>
+          </div>
+          <div class="bar-row" style="grid-template-columns:148px 1fr 64px">
+            <span class="bar-label">Implementation</span>
+            <div class="bar-track" style="display:flex"><div style="width:25%;background:#ff6fa3;height:100%"></div><div style="width:75%;background:#35e0a1;height:100%"></div></div>
+            <span class="bar-value">25 / 75</span>
+          </div>
+          <div class="bar-row" style="grid-template-columns:148px 1fr 64px">
+            <span class="bar-label">Repetitive work</span>
+            <div class="bar-track" style="display:flex"><div style="width:10%;background:#ff6fa3;height:100%"></div><div style="width:90%;background:#35e0a1;height:100%"></div></div>
+            <span class="bar-value">10 / 90</span>
+          </div>
+          <div class="bar-row" style="grid-template-columns:148px 1fr 64px">
+            <span class="bar-label">Final review</span>
+            <div class="bar-track" style="display:flex"><div style="width:80%;background:#ff6fa3;height:100%"></div><div style="width:20%;background:#35e0a1;height:100%"></div></div>
+            <span class="bar-value">80 / 20</span>
+          </div>
+          <p class="card-copy" style="margin-top:10px; font-size:12px">Illustrative splits, not measured percentages — the real ratio depends on the task and your own domain expertise.</p>
+        </div>
+        <div class="statement" style="border-color:#8a7bff; background:rgba(138,123,255,0.08); flex:1; display:flex; align-items:center; font-size:19px"><span>No DORA-style industry standard exists for this split yet. Anthropic's review of ~400K Claude Code sessions found a stable pattern instead: humans decide <b>what to do</b>, agents decide <b>how</b> — and success tracks domain expertise, not how "autonomously" the agent is left running.</span></div>
       </div>
-      <div class="statement" style="border-color:#ff6fa3; background:rgba(255,111,163,0.08)">Stop-and-switch signal: if reviewing the AI's output takes longer than doing the task yourself would have, you've delegated the wrong task.</div>
-      <div class="card">
-        <h3>📊 Make it a trend, not a gut feeling</h3>
-        <p class="card-copy">Track <b>PRs merged (or story points) per 1M tokens spent</b>, over time, per task category. A falling trend on a category you keep delegating is a signal to route it back to yourself — or to write a Skill that fixes the actual gap instead of retrying with a bigger model.</p>
-      </div>
-      <div class="stat-row">
-        <div class="stat-chip"><b>1</b><span>Can I verify the output faster than I'd write it?</span></div>
-        <div class="stat-chip"><b>2</b><span>Is the blast radius small enough to fail safely?</span></div>
-        <div class="stat-chip"><b>3</b><span>Have I delegated this task type before, successfully?</span></div>
+      <div class="fill">
+        <div class="stat-row" style="flex-direction:column">
+          <div class="stat-chip"><b>$600/day</b><span>OpenAI: median internal researcher spend, API-equivalent pricing</span></div>
+          <div class="stat-chip"><b>$7,000/day</b><span>OpenAI: 90th-percentile internal spend</span></div>
+          <div class="stat-chip"><b>3.1×</b><span>OpenAI: agent-workdays consumed per human workday, org-wide</span></div>
+        </div>
+        <div class="card" style="flex:1; justify-content:center"><span class="icon">💸</span><h3>$100/8h is a budget, not a workforce</h3><p class="card-copy">Industry consumption is trending toward far more spend per engineer, not a universal per-dev cap. Treat a fixed daily budget as something to <b>schedule</b> across the day's tasks — not something to max out on the first hard problem.</p></div>
+        <div class="statement" style="border-color:#35e0a1; background:rgba(53,224,161,0.08); display:flex; align-items:center">Don't ask "Can AI do this?" Ask "Is this the best use of my remaining budget?"</div>
       </div>
     </div>
     <footer class="footer"><div class="brand"><span class="brand-mark">T$</span> Decision</div><span>14 / 15</span></footer>
